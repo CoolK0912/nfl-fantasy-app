@@ -4,6 +4,12 @@ A comprehensive full-stack application for NFL fantasy football analysis and sea
 
 ## Features
 
+### 🔴 LIVE NFL DATA
+- **Real-Time Standings**: Powered by ESPN API with current 2025-2026 season records
+- **Live Game Scores**: Updated every 5 minutes during game days
+- **Current Week Tracking**: Automatically syncs with the actual NFL schedule
+- **Smart Caching**: Optimized data fetching (1 hour for standings, 5 min for games)
+
 ### Fantasy Football Tools
 - **Team Skill Ratings**: Analyze fantasy football teams with comprehensive ratings (S, A, B, C, D, F tiers)
 - **Position Strength Analysis**: Breakdown of QB, RB, WR, and TE strength
@@ -49,12 +55,24 @@ cd nfl-fantasy-app
 npm install
 ```
 
-3. Run the development server:
+3. Set up environment variables:
+```bash
+cp .env.example .env.local
+```
+
+Edit `.env.local` and set:
+```bash
+NEXT_PUBLIC_USE_LIVE_DATA=true  # Enable real NFL data from ESPN API
+```
+
+4. Run the development server:
 ```bash
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+**Note**: The app uses ESPN's public API for live NFL data - no API key required! Just enable it in `.env.local`.
 
 ### Build for Production
 
