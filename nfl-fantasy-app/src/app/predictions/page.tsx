@@ -70,64 +70,77 @@ export default function PredictionsPage() {
   const weeks = Object.keys(gamesByWeek).map(Number).sort((a, b) => a - b);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900">
-      {/* Header */}
-      <header className="bg-blue-800 shadow-lg">
+    <div className="min-h-screen relative overflow-hidden" style={{
+      background: 'linear-gradient(180deg, #1a5f1a 0%, #0d4f0d 50%, #1a5f1a 100%)',
+    }}>
+      {/* Football Field Yard Lines */}
+      <div className="absolute inset-0 pointer-events-none opacity-20">
+        {[...Array(10)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-full border-t-2 border-white"
+            style={{ top: `${(i + 1) * 10}%` }}
+          />
+        ))}
+      </div>
+
+      {/* Header - Scoreboard Style */}
+      <header className="bg-gradient-to-r from-amber-900 via-amber-800 to-amber-900 shadow-2xl border-b-4 border-yellow-400 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center flex-wrap gap-4">
             <div>
-              <h1 className="text-4xl font-bold text-white">NFL Season Predictions</h1>
-              <p className="text-gray-200 mt-2">2025-2026 Season Forecast</p>
+              <h1 className="text-3xl md:text-4xl font-black text-yellow-300" style={{textShadow: '2px 2px 4px rgba(0,0,0,0.8)'}}>🏈 NFL SEASON PREDICTIONS</h1>
+              <p className="text-yellow-100 mt-1 font-bold">2025-2026 Forecast • Live Data</p>
             </div>
             <Link
               href="/"
-              className="bg-white text-blue-800 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100"
+              className="bg-yellow-400 text-gray-900 px-6 py-3 rounded-lg font-black hover:bg-yellow-300 border-2 border-white shadow-lg transition-all hover:scale-105"
             >
-              Back to Home
+              ← HOME
             </Link>
           </div>
         </div>
       </header>
 
-      {/* Tab Navigation */}
-      <div className="bg-blue-700">
+      {/* Tab Navigation - Scoreboard Style */}
+      <div className="bg-gray-900 border-b-4 border-yellow-400 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex space-x-8">
+          <div className="flex space-x-4 md:space-x-8">
             <button
               onClick={() => setActiveTab('games')}
-              className={`py-4 px-6 font-semibold transition-colors ${
+              className={`py-4 px-4 md:px-6 font-black transition-all text-sm md:text-base ${
                 activeTab === 'games'
-                  ? 'text-white border-b-4 border-white'
-                  : 'text-blue-200 hover:text-white'
+                  ? 'text-yellow-300 border-b-4 border-yellow-400'
+                  : 'text-white hover:text-yellow-300'
               }`}
             >
-              Game Predictions
+              GAMES
             </button>
             <button
               onClick={() => setActiveTab('standings')}
-              className={`py-4 px-6 font-semibold transition-colors ${
+              className={`py-4 px-4 md:px-6 font-black transition-all text-sm md:text-base ${
                 activeTab === 'standings'
-                  ? 'text-white border-b-4 border-white'
-                  : 'text-blue-200 hover:text-white'
+                  ? 'text-yellow-300 border-b-4 border-yellow-400'
+                  : 'text-white hover:text-yellow-300'
               }`}
             >
-              Division Standings
+              STANDINGS
             </button>
             <button
               onClick={() => setActiveTab('playoffs')}
-              className={`py-4 px-6 font-semibold transition-colors ${
+              className={`py-4 px-4 md:px-6 font-black transition-all text-sm md:text-base ${
                 activeTab === 'playoffs'
-                  ? 'text-white border-b-4 border-white'
-                  : 'text-blue-200 hover:text-white'
+                  ? 'text-yellow-300 border-b-4 border-yellow-400'
+                  : 'text-white hover:text-yellow-300'
               }`}
             >
-              Playoff Bracket
+              PLAYOFFS
             </button>
           </div>
         </div>
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
         {loading ? (
           <div className="text-white text-center py-12">Loading predictions...</div>
         ) : (
@@ -135,38 +148,38 @@ export default function PredictionsPage() {
             {/* Game Predictions Tab */}
             {activeTab === 'games' && (
               <div>
-                <h2 className="text-3xl font-bold text-white mb-6">Upcoming Games</h2>
+                <h2 className="text-3xl font-bold text-white mb-6 text-shadow">Upcoming Games</h2>
                 {weeks.map((week) => (
                   <div key={week} className="mb-8">
-                    <h3 className="text-2xl font-bold text-white mb-4">Week {week}</h3>
+                    <h3 className="text-2xl font-bold text-yellow-300 mb-4">Week {week}</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {gamesByWeek[week].map((game) => (
-                        <div key={game.id} className="bg-white rounded-lg shadow-lg p-6">
+                        <div key={game.id} className="bg-gray-900 border-2 border-yellow-400 rounded-lg shadow-2xl p-6">
                           <div className="flex justify-between items-center mb-4">
                             <div className="text-center flex-1">
-                              <div className="text-xl font-bold text-gray-800">{game.awayTeam}</div>
-                              <div className="text-sm text-gray-500">Away</div>
+                              <div className="text-xl font-bold text-white">{game.awayTeam}</div>
+                              <div className="text-sm text-yellow-200">Away</div>
                               {game.winProbability && (
-                                <div className="text-blue-600 font-semibold mt-1">
+                                <div className="text-blue-400 font-semibold mt-1">
                                   {(game.winProbability.away * 100).toFixed(0)}%
                                 </div>
                               )}
                             </div>
 
                             <div className="text-center px-6">
-                              <div className="text-gray-400 text-sm">@</div>
+                              <div className="text-yellow-400 text-sm font-bold">@</div>
                               {game.predictedAwayScore !== undefined && game.predictedHomeScore !== undefined && (
-                                <div className="text-2xl font-bold text-gray-900 mt-2">
+                                <div className="text-2xl font-bold text-yellow-300 mt-2">
                                   {game.predictedAwayScore} - {game.predictedHomeScore}
                                 </div>
                               )}
                             </div>
 
                             <div className="text-center flex-1">
-                              <div className="text-xl font-bold text-gray-800">{game.homeTeam}</div>
-                              <div className="text-sm text-gray-500">Home</div>
+                              <div className="text-xl font-bold text-white">{game.homeTeam}</div>
+                              <div className="text-sm text-yellow-200">Home</div>
                               {game.winProbability && (
-                                <div className="text-green-600 font-semibold mt-1">
+                                <div className="text-green-400 font-semibold mt-1">
                                   {(game.winProbability.home * 100).toFixed(0)}%
                                 </div>
                               )}
@@ -175,7 +188,7 @@ export default function PredictionsPage() {
 
                           {game.winProbability && (
                             <div className="mt-4">
-                              <div className="flex w-full h-4 rounded-full overflow-hidden">
+                              <div className="flex w-full h-4 rounded-full overflow-hidden border-2 border-yellow-400">
                                 <div
                                   className="bg-blue-500"
                                   style={{ width: `${game.winProbability.away * 100}%` }}
@@ -201,29 +214,29 @@ export default function PredictionsPage() {
                 <h2 className="text-3xl font-bold text-white mb-6">Projected Final Standings</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   {Object.entries(playoffData.standings).map(([division, teams]: [string, any]) => (
-                    <div key={division} className="bg-white rounded-lg shadow-lg p-6">
-                      <h3 className="text-xl font-bold text-gray-800 mb-4 border-b pb-2">
+                    <div key={division} className="bg-gray-900 border-2 border-yellow-400 rounded-lg shadow-2xl p-6">
+                      <h3 className="text-xl font-bold text-yellow-300 mb-4 border-b-2 border-yellow-400 pb-2">
                         {division}
                       </h3>
                       <div className="space-y-3">
                         {teams.map((team: any, index: number) => (
                           <div key={team.id} className="flex justify-between items-center">
                             <div className="flex items-center">
-                              <div className="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold mr-3">
+                              <div className="w-8 h-8 bg-yellow-500 text-gray-900 rounded-full flex items-center justify-center font-bold mr-3">
                                 {index + 1}
                               </div>
                               <div>
-                                <div className="font-semibold text-gray-800">{team.name}</div>
-                                <div className="text-sm text-gray-500">{team.abbreviation}</div>
+                                <div className="font-semibold text-white">{team.name}</div>
+                                <div className="text-sm text-yellow-200">{team.abbreviation}</div>
                               </div>
                             </div>
                             <div className="text-right">
-                              <div className="font-bold text-gray-800">
+                              <div className="font-bold text-white">
                                 {Math.round(team.record.wins)}-{Math.round(team.record.losses)}
                               </div>
-                              <div className="text-sm text-gray-500">
-                                {index === 0 && <span className="text-green-600">Division Winner</span>}
-                                {index > 0 && index <= 3 && <span className="text-blue-500">Playoff Hunt</span>}
+                              <div className="text-sm text-yellow-200">
+                                {index === 0 && <span className="text-green-400 font-bold">Division Winner</span>}
+                                {index > 0 && index <= 3 && <span className="text-blue-400 font-bold">Playoff Hunt</span>}
                               </div>
                             </div>
                           </div>
@@ -239,33 +252,33 @@ export default function PredictionsPage() {
             {activeTab === 'playoffs' && playoffData && (
               <div>
                 <div className="text-center mb-8">
-                  <h2 className="text-3xl font-bold text-white mb-2">Playoff Bracket Simulation</h2>
-                  <div className="bg-yellow-400 text-yellow-900 inline-block px-6 py-3 rounded-lg font-bold text-xl">
-                    Predicted Champion: {playoffData.superBowlChampion}
+                  <h2 className="text-3xl font-bold text-white mb-4">Playoff Bracket Simulation</h2>
+                  <div className="bg-gradient-to-r from-yellow-400 to-yellow-600 border-4 border-white inline-block px-8 py-4 rounded-xl font-black text-2xl shadow-2xl">
+                    🏆 Predicted Champion: {playoffData.superBowlChampion}
                   </div>
                 </div>
 
                 {/* Wild Card Round */}
                 <div className="mb-8">
-                  <h3 className="text-2xl font-bold text-white mb-4">Wild Card Round</h3>
+                  <h3 className="text-2xl font-bold text-yellow-300 mb-4">🎯 Wild Card Round</h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {playoffData.playoffBracket.wildCard.map((game: any) => (
-                      <div key={game.id} className="bg-white rounded-lg p-4">
-                        <div className="text-center text-sm text-gray-500 mb-2">Wild Card</div>
-                        <div className={`p-2 rounded ${game.predictedWinner === game.homeTeam ? 'bg-green-100' : ''}`}>
+                      <div key={game.id} className="bg-gray-900 border-2 border-yellow-400 rounded-lg p-4 shadow-xl">
+                        <div className="text-center text-sm text-yellow-200 font-bold mb-2">Wild Card</div>
+                        <div className={`p-3 rounded border-2 ${game.predictedWinner === game.homeTeam ? 'bg-green-800 border-green-400' : 'bg-gray-800 border-gray-600'}`}>
                           <div className="flex justify-between">
-                            <span className="font-semibold">{game.homeTeam}</span>
-                            <span>{game.homeScore}</span>
+                            <span className="font-semibold text-white">{game.homeTeam}</span>
+                            <span className="font-bold text-yellow-300">{game.homeScore}</span>
                           </div>
                         </div>
-                        <div className={`p-2 rounded mt-1 ${game.predictedWinner === game.awayTeam ? 'bg-green-100' : ''}`}>
+                        <div className={`p-3 rounded border-2 mt-2 ${game.predictedWinner === game.awayTeam ? 'bg-green-800 border-green-400' : 'bg-gray-800 border-gray-600'}`}>
                           <div className="flex justify-between">
-                            <span className="font-semibold">{game.awayTeam}</span>
-                            <span>{game.awayScore}</span>
+                            <span className="font-semibold text-white">{game.awayTeam}</span>
+                            <span className="font-bold text-yellow-300">{game.awayScore}</span>
                           </div>
                         </div>
-                        <div className="text-center mt-2 text-xs text-green-600 font-semibold">
-                          Winner: {game.predictedWinner}
+                        <div className="text-center mt-3 text-sm text-green-400 font-bold">
+                          ✓ Winner: {game.predictedWinner}
                         </div>
                       </div>
                     ))}
@@ -274,25 +287,25 @@ export default function PredictionsPage() {
 
                 {/* Divisional Round */}
                 <div className="mb-8">
-                  <h3 className="text-2xl font-bold text-white mb-4">Divisional Round</h3>
+                  <h3 className="text-2xl font-bold text-yellow-300 mb-4">⚡ Divisional Round</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {playoffData.playoffBracket.divisional.map((game: any) => (
-                      <div key={game.id} className="bg-white rounded-lg p-4">
-                        <div className="text-center text-sm text-gray-500 mb-2">Divisional</div>
-                        <div className={`p-2 rounded ${game.predictedWinner === game.homeTeam ? 'bg-green-100' : ''}`}>
+                      <div key={game.id} className="bg-gray-900 border-2 border-yellow-400 rounded-lg p-4 shadow-xl">
+                        <div className="text-center text-sm text-yellow-200 font-bold mb-2">Divisional</div>
+                        <div className={`p-3 rounded border-2 ${game.predictedWinner === game.homeTeam ? 'bg-green-800 border-green-400' : 'bg-gray-800 border-gray-600'}`}>
                           <div className="flex justify-between">
-                            <span className="font-semibold">{game.homeTeam}</span>
-                            <span>{game.homeScore}</span>
+                            <span className="font-semibold text-white">{game.homeTeam}</span>
+                            <span className="font-bold text-yellow-300">{game.homeScore}</span>
                           </div>
                         </div>
-                        <div className={`p-2 rounded mt-1 ${game.predictedWinner === game.awayTeam ? 'bg-green-100' : ''}`}>
+                        <div className={`p-3 rounded border-2 mt-2 ${game.predictedWinner === game.awayTeam ? 'bg-green-800 border-green-400' : 'bg-gray-800 border-gray-600'}`}>
                           <div className="flex justify-between">
-                            <span className="font-semibold">{game.awayTeam}</span>
-                            <span>{game.awayScore}</span>
+                            <span className="font-semibold text-white">{game.awayTeam}</span>
+                            <span className="font-bold text-yellow-300">{game.awayScore}</span>
                           </div>
                         </div>
-                        <div className="text-center mt-2 text-xs text-green-600 font-semibold">
-                          Winner: {game.predictedWinner}
+                        <div className="text-center mt-3 text-sm text-green-400 font-bold">
+                          ✓ Winner: {game.predictedWinner}
                         </div>
                       </div>
                     ))}
@@ -301,25 +314,25 @@ export default function PredictionsPage() {
 
                 {/* Championship Round */}
                 <div className="mb-8">
-                  <h3 className="text-2xl font-bold text-white mb-4">Conference Championships</h3>
+                  <h3 className="text-2xl font-bold text-yellow-300 mb-4">🔥 Conference Championships</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {playoffData.playoffBracket.championship.map((game: any) => (
-                      <div key={game.id} className="bg-white rounded-lg p-4">
-                        <div className="text-center text-sm text-gray-500 mb-2">Championship</div>
-                        <div className={`p-2 rounded ${game.predictedWinner === game.homeTeam ? 'bg-green-100' : ''}`}>
+                      <div key={game.id} className="bg-gray-900 border-2 border-yellow-400 rounded-lg p-4 shadow-xl">
+                        <div className="text-center text-sm text-yellow-200 font-bold mb-2">Championship</div>
+                        <div className={`p-3 rounded border-2 ${game.predictedWinner === game.homeTeam ? 'bg-green-800 border-green-400' : 'bg-gray-800 border-gray-600'}`}>
                           <div className="flex justify-between">
-                            <span className="font-semibold">{game.homeTeam}</span>
-                            <span>{game.homeScore}</span>
+                            <span className="font-semibold text-white">{game.homeTeam}</span>
+                            <span className="font-bold text-yellow-300">{game.homeScore}</span>
                           </div>
                         </div>
-                        <div className={`p-2 rounded mt-1 ${game.predictedWinner === game.awayTeam ? 'bg-green-100' : ''}`}>
+                        <div className={`p-3 rounded border-2 mt-2 ${game.predictedWinner === game.awayTeam ? 'bg-green-800 border-green-400' : 'bg-gray-800 border-gray-600'}`}>
                           <div className="flex justify-between">
-                            <span className="font-semibold">{game.awayTeam}</span>
-                            <span>{game.awayScore}</span>
+                            <span className="font-semibold text-white">{game.awayTeam}</span>
+                            <span className="font-bold text-yellow-300">{game.awayScore}</span>
                           </div>
                         </div>
-                        <div className="text-center mt-2 text-xs text-green-600 font-semibold">
-                          Winner: {game.predictedWinner}
+                        <div className="text-center mt-3 text-sm text-green-400 font-bold">
+                          ✓ Winner: {game.predictedWinner}
                         </div>
                       </div>
                     ))}
@@ -328,25 +341,25 @@ export default function PredictionsPage() {
 
                 {/* Super Bowl */}
                 <div>
-                  <h3 className="text-2xl font-bold text-white mb-4">Super Bowl LX</h3>
+                  <h3 className="text-3xl font-bold text-white mb-6 text-center">🏆 SUPER BOWL LX 🏆</h3>
                   <div className="max-w-md mx-auto">
-                    <div className="bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-lg p-6 shadow-2xl">
-                      <div className="text-center text-white font-bold mb-4">SUPER BOWL LX</div>
-                      <div className={`bg-white p-3 rounded ${playoffData.playoffBracket.superBowl.predictedWinner === playoffData.playoffBracket.superBowl.homeTeam ? 'ring-4 ring-green-500' : ''}`}>
+                    <div className="bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 rounded-2xl p-8 shadow-2xl border-4 border-white">
+                      <div className="text-center text-gray-900 font-black text-2xl mb-6">SUPER BOWL LX</div>
+                      <div className={`bg-gray-900 p-4 rounded-lg border-4 ${playoffData.playoffBracket.superBowl.predictedWinner === playoffData.playoffBracket.superBowl.homeTeam ? 'border-green-400 shadow-lg shadow-green-400' : 'border-gray-600'}`}>
                         <div className="flex justify-between">
-                          <span className="font-bold text-lg">{playoffData.playoffBracket.superBowl.homeTeam}</span>
-                          <span className="font-bold text-lg">{playoffData.playoffBracket.superBowl.homeScore}</span>
+                          <span className="font-bold text-xl text-white">{playoffData.playoffBracket.superBowl.homeTeam}</span>
+                          <span className="font-bold text-2xl text-yellow-300">{playoffData.playoffBracket.superBowl.homeScore}</span>
                         </div>
                       </div>
-                      <div className={`bg-white p-3 rounded mt-2 ${playoffData.playoffBracket.superBowl.predictedWinner === playoffData.playoffBracket.superBowl.awayTeam ? 'ring-4 ring-green-500' : ''}`}>
+                      <div className={`bg-gray-900 p-4 rounded-lg border-4 mt-3 ${playoffData.playoffBracket.superBowl.predictedWinner === playoffData.playoffBracket.superBowl.awayTeam ? 'border-green-400 shadow-lg shadow-green-400' : 'border-gray-600'}`}>
                         <div className="flex justify-between">
-                          <span className="font-bold text-lg">{playoffData.playoffBracket.superBowl.awayTeam}</span>
-                          <span className="font-bold text-lg">{playoffData.playoffBracket.superBowl.awayScore}</span>
+                          <span className="font-bold text-xl text-white">{playoffData.playoffBracket.superBowl.awayTeam}</span>
+                          <span className="font-bold text-2xl text-yellow-300">{playoffData.playoffBracket.superBowl.awayScore}</span>
                         </div>
                       </div>
-                      <div className="text-center mt-4 bg-white rounded px-4 py-2">
-                        <div className="text-yellow-900 font-bold text-xl">
-                          Champion: {playoffData.playoffBracket.superBowl.predictedWinner}
+                      <div className="text-center mt-6 bg-gray-900 rounded-lg px-6 py-4 border-4 border-white">
+                        <div className="text-yellow-300 font-black text-2xl">
+                          🏆 {playoffData.playoffBracket.superBowl.predictedWinner} 🏆
                         </div>
                       </div>
                     </div>
